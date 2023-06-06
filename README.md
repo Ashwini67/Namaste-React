@@ -24,3 +24,10 @@
  *
  * Transitive Dependencies
  */
+
+06-06-2023
+Running cmd
+npx parcel index.html
+
+TO CREATE BUILD USE BELOW CMD
+npx parcel build index.html
