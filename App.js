@@ -22,14 +22,18 @@ const Header = () => {
 
 const RestaurantCard = (props) => {
   const { resData } = props; 
+
+  // Optimised the code instead of padding in the JSX added required data in the const
+  const { cloudinaryImageId, name, avgRating, deliveryTime, cuisines,costForTwo,  } = resData?.data;
   return (
     <div className="res-card" style={{backgroundColor: "#f0f0f0"}}>
-      <img className="res-logo" alt="res-logo" src={"https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_1024/"+resData.data.cloudinaryImageId} />
-      <h3>{resData.data.name}</h3>
-      <h4>{resData.data.cuisines.join(", ")}</h4>
-      <h4>{resData.data.avgRating} star</h4>
-      <h4>₹{resData.data.costForTwo / 100}</h4>
-      <h4>{resData.data.deliveryTime} Minutes</h4>
+      <img className="res-logo" alt="res-logo" src={"https://res.cloudinary.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_1024/"+cloudinaryImageId} />
+      {/* OPTIMISATION taking the variable from the const declaration */}
+      <h3>{name}</h3>
+      <h4>{cuisines.join(", ")}</h4>
+      <h4>{avgRating} star</h4>
+      <h4>₹{costForTwo / 100}</h4>
+      <h4>{deliveryTime} Minutes</h4>
 
     </div>
   )
@@ -1787,20 +1791,21 @@ const Body = () => {
     <div className="body">
       <div className="search">Search</div>
       <div className="res-container">
-      <RestaurantCard resData = {resList[0]}/>
-      <RestaurantCard resData = {resList[1]}/>
-      <RestaurantCard resData = {resList[2]}/>
-       <RestaurantCard resData = {resList[3]}/>
-       <RestaurantCard resData = {resList[4]}/>
-       <RestaurantCard resData = {resList[5]}/>
-       <RestaurantCard resData = {resList[6]}/>
-       <RestaurantCard resData = {resList[7]}/>
-       <RestaurantCard resData = {resList[8]}/>
-       <RestaurantCard resData = {resList[9]}/>
-       <RestaurantCard resData = {resList[10]}/>
-       <RestaurantCard resData = {resList[11]}/>
+        {/* OPTIMISATION */}
 
+        {/* Neever use index as key in react, it is best practice to use id as key in map function */}
 
+        {/* USING ID AS KEY */}
+      
+      {
+        resList.map(restaurant => <RestaurantCard key={restaurant.data.id} resData = {restaurant}/>)
+      }
+
+      {/* USING INDEX AS KEY */}
+
+     {/* {
+        resList.map((restaurant, index) => <RestaurantCard key={index} resData = {restaurant}/>)
+      } */}
 
       </div>
     </div>
